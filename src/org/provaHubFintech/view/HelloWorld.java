@@ -1,4 +1,4 @@
-package provaHubFintech;
+package org.provaHubFintech.view;
 
 public class HelloWorld {
 
