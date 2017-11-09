@@ -30,6 +30,13 @@ public class WebBrowser extends JFrame implements HyperlinkListener{
 		getContentPane().add(pnURL, BorderLayout.NORTH);
 		getContentPane().add(ep, BorderLayout.CENTER);
 		getContentPane().add(lblStatus, BorderLayout.SOUTH);
+		try {
+		ep.setPage("file://");
+		} catch (Exception e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(WebBrowser.this, "Browser problem: " + e.getMessage());
+		}
+		/*
 		ActionListener al = new ActionListener () {
 			public void actionPerformed(ActionEvent ae) {
 				try {
@@ -38,6 +45,7 @@ public class WebBrowser extends JFrame implements HyperlinkListener{
 						url = url.substring(7);
 					}
 					ep.setPage("http://" + IDN.toASCII(url));
+					ep.setPage();
 				} catch (Exception e) {
 					e.printStackTrace();
 					JOptionPane.showMessageDialog(WebBrowser.this, "Browser problem: " + e.getMessage());
@@ -46,6 +54,7 @@ public class WebBrowser extends JFrame implements HyperlinkListener{
 		};
 		
 		txtURL.addActionListener(al);
+		*/
 		setSize(300, 300);
 		setVisible(true);
 	}
