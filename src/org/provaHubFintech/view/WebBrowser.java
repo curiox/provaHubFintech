@@ -1,23 +1,19 @@
 package org.provaHubFintech.view;
 
 import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.net.IDN;
 
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 
 public class WebBrowser extends JFrame implements HyperlinkListener{
 
 	private static final long serialVersionUID = -4222939053884781184L;
-	private JTextField txtURL = new JTextField();
+	//private JTextField txtURL = new JTextField();
 	JEditorPane ep = new JEditorPane();
 	private JLabel lblStatus = new JLabel();
 	
@@ -25,13 +21,13 @@ public class WebBrowser extends JFrame implements HyperlinkListener{
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		JPanel pnURL = new JPanel();
 		pnURL.setLayout(new BorderLayout());
-		pnURL.add(new JLabel("URL: "), BorderLayout.WEST);
-		pnURL.add(txtURL, BorderLayout.CENTER);
+		//pnURL.add(new JLabel("URL: "), BorderLayout.WEST);
+		//pnURL.add(txtURL, BorderLayout.CENTER);
 		getContentPane().add(pnURL, BorderLayout.NORTH);
 		getContentPane().add(ep, BorderLayout.CENTER);
 		getContentPane().add(lblStatus, BorderLayout.SOUTH);
 		try {
-		ep.setPage("file://");
+		ep.setPage("file:///C:\\Users\\junic\\git\\provaHubFintech\\WebContent\\index.html");
 		} catch (Exception e) {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(WebBrowser.this, "Browser problem: " + e.getMessage());
