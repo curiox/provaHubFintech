@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import org.provaHubFintech.singleton.ConfigSingleton;
+
 public class ConnectionProvider {
 	
 	static boolean succ = false;
@@ -18,11 +20,10 @@ public class ConnectionProvider {
 			String driverName = "com.mysql.jdbc.Driver";
 			Class.forName(driverName);
 			
-			String serverName = "localhost", mydatabase = "prova",
-					url = "jdbc:mysql://" + serverName + "/" + mydatabase,
-					username = "root",
-					password = "root";
-			c = DriverManager.getConnection(url, username, password);
+			ConfigSingleton singleton = ConfigSingleton.getInstance();
+			
+			String url = "jdbc:mysql://" + singleton.serverName + "/" + singleton.dbName;
+			c = DriverManager.getConnection(url, singleton.user, singleton.password);
 			
 			if (c != null) {
 				succ = true;

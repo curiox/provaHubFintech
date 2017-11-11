@@ -51,7 +51,7 @@ public class WebBrowser extends JFrame implements HyperlinkListener{
 		
 		txtURL.addActionListener(al);
 		*/
-		setSize(300, 300);
+		setSize(500, 500);
 		setVisible(true);
 	}
 	
