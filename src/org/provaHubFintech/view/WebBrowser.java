@@ -46,8 +46,7 @@ public class WebBrowser extends JFrame {
 				BorderPane borderPane = new BorderPane();
 				webComponent = new WebView();
 				
-				webComponent.getEngine().load("file:///C:\\Users\\junic\\git\\provaHubFintech\\WebContent\\index.html");
-				
+				webComponent.getEngine().load(ConfigSingleton.getInstance().indexPath);
 				borderPane.setCenter(webComponent);
 				Scene scene = new Scene(borderPane, 450, 450);
 				javafxpanel.setScene(scene);

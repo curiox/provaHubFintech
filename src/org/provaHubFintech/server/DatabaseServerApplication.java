@@ -12,7 +12,7 @@ public class DatabaseServerApplication extends Application {
 		router.attach("/database/conta", ContaServerResource.class);
 		router.attach("/database/pessoafisica", PessoaFisicaServerResource.class);
 		router.attach("/database/pessoajuririca", PessoaJuridicaServerResource.class);
-		router.attach("/databse/transferencia", TransferenciaServerResource.class);
+		router.attach("/database/transferencia", TransferenciaServerResource.class);
 		
 		return router;
 	}

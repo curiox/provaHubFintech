@@ -1,5 +1,15 @@
 $("#addConta").click(function() {
-	document.write("teste");
+	
+	$.post("/database/conta",
+	{
+		nome: $("#Nome").val(),
+		cnpj: $("#CNPJ").val(),
+		cpf: $("#CPF").val(),
+		tipoConta: $("#tipoConta").val()
+	},
+	function (data, status) {
+		
+	});
 });
 
 $("#removeConta").click(function() {
