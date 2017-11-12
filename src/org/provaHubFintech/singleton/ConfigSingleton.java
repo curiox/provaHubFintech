@@ -6,6 +6,7 @@ public class ConfigSingleton {
 	public String password = "root";
 	public String serverName = "localhost";
 	public String dbName = "prova";
+	public String indexPath = "file:///C:\\Users\\junic\\git\\provaHubFintech\\WebContent\\index.html";
 	
 	private static ConfigSingleton onlyInstance;
 	

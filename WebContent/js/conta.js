@@ -1,5 +1,5 @@
 $("#addConta").click(function() {
-	
+	document.write("teste");
 });
 
 $("#removeConta").click(function() {

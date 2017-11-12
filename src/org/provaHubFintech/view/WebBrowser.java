@@ -1,50 +1,71 @@
 package org.provaHubFintech.view;
 
+import javafx.application.*;
+import javafx.embed.swing.*;
+import javafx.scene.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.web.*;
+
 import java.awt.BorderLayout;
 
-import javax.swing.JEditorPane;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.event.HyperlinkEvent;
-import javax.swing.event.HyperlinkListener;
+import javax.swing.SwingUtilities;
 
-public class WebBrowser extends JFrame implements HyperlinkListener{
+import org.provaHubFintech.singleton.ConfigSingleton;
 
-	private static final long serialVersionUID = -4222939053884781184L;
-	//private JTextField txtURL = new JTextField();
-	JEditorPane ep = new JEditorPane();
-	private JLabel lblStatus = new JLabel();
+public class WebBrowser extends JFrame {
+	
+	private static final long serialVersionUID = -7557599105005691421L;
+	JFXPanel javafxpanel;
+	WebView webComponent;
+	JPanel mainPanel;
 	
 	public WebBrowser() {
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		JPanel pnURL = new JPanel();
-		pnURL.setLayout(new BorderLayout());
-		getContentPane().add(pnURL, BorderLayout.NORTH);
-		getContentPane().add(ep, BorderLayout.CENTER);
-		getContentPane().add(lblStatus, BorderLayout.SOUTH);
-		try {
-		ep.setPage("file:///C:\\Users\\junic\\git\\provaHubFintech\\WebContent\\index.html");
-		} catch (Exception e) {
-			e.printStackTrace();
-			JOptionPane.showMessageDialog(WebBrowser.this, "Browser problem: " + e.getMessage());
-		}
-		setSize(500, 500);
-		setVisible(true);
+		javafxpanel = new JFXPanel();
+		
+		initSwingComponents();
+		
+		loadJavaFXScene();
 	}
 	
-	public void hyperlinkUpdate(HyperlinkEvent hle) {
-		HyperlinkEvent.EventType evtype = hle.getEventType();
-		if (evtype == HyperlinkEvent.EventType.ENTERED) {
-			lblStatus.setText(hle.getURL().toString());
-		} else if (evtype == HyperlinkEvent.EventType.EXITED) {
-			lblStatus.setText(" ");
-		}
+	private void initSwingComponents() {
+		mainPanel = new JPanel();
+		mainPanel.setLayout(new BorderLayout());
+		mainPanel.add(javafxpanel, BorderLayout.CENTER);
+		
+		this.add(mainPanel);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setSize(700, 600);
 	}
 	
+	public void loadJavaFXScene() {
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				BorderPane borderPane = new BorderPane();
+				webComponent = new WebView();
+				
+				webComponent.getEngine().load("file:///C:\\Users\\junic\\git\\provaHubFintech\\WebContent\\index.html");
+				
+				borderPane.setCenter(webComponent);
+				Scene scene = new Scene(borderPane, 450, 450);
+				javafxpanel.setScene(scene);
+			}
+		});
+	}
+
 	public static void main(String[] args) {
-		new WebBrowser();
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				WebBrowser browser = new WebBrowser();
+				browser.setVisible(true);
+			}
+		});
+		
 	}
+	
+	
 
 }
