@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).ready(function () {	
 	$("#addPessoaF").click(function() {
 		$.post("http://localhost:8080/database/pessoafisica",
 				{
