@@ -15,7 +15,7 @@ $(document).ready(function () {
 	
 		today = dd + '/' + mm + '/' + yyyy;
 		
-		$.post("/database/conta",
+		$.post("http://localhost:8080/database/conta",
 		{
 			nome: $("#Nome").val(),
 			cnpj: $("#CNPJ").val(),
@@ -29,14 +29,37 @@ $(document).ready(function () {
 	});
 	
 	$("#removeConta").click(function() {
-		
+		$.delete("http://localhost:8080/database/conta",
+				{
+			nome: $("#Nome").val(),
+			cnpj: $("#CNPJ").val(),
+			cpf: $("#CPF").val(),
+			tipoConta: $("#tipoConta").val(),
+			data: today
+				},
+				function (data, status) {
+					
+				})
 	});
 	
 	$("#updateConta").click(function () {
-		
+		$.put("http://localhost:8080/database/conta",
+				{
+			nome: $("#Nome").val(),
+			cnpj: $("#CNPJ").val(),
+			cpf: $("#CPF").val(),
+			tipoConta: $("#tipoConta").val(),
+			data: today
+				},
+				function (data, status) {
+					
+				})
 	});
 	
 	$("#consultaConta").click(function () {
-		
+		$.get("http://localhost:8080/database/conta",
+				function (data, status) {
+					$("#messages").html(status + " " + data);
+				})
 	});
 })
