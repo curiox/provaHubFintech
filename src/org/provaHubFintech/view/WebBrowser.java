@@ -14,6 +14,8 @@ import javax.swing.SwingUtilities;
 
 import org.provaHubFintech.server.DatabaseServerApplication;
 import org.provaHubFintech.singleton.ConfigSingleton;
+import org.restlet.Component;
+import org.restlet.data.Protocol;
 
 public class WebBrowser extends JFrame {
 	
@@ -56,8 +58,13 @@ public class WebBrowser extends JFrame {
 	}
 
 	public static void main(String[] args) {
+		try {
+		Component comp = new Component();
+		comp.getServers().add(Protocol.HTTP, 8080);
 		DatabaseServerApplication app = new DatabaseServerApplication();
 		app.createInBoundRoot();
+		comp.getDefaultHost().attach("/database", app);
+		comp.start();
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
@@ -65,6 +72,9 @@ public class WebBrowser extends JFrame {
 				browser.setVisible(true);
 			}
 		});
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	

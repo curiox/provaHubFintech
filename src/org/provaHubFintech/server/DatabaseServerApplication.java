@@ -9,10 +9,10 @@ public class DatabaseServerApplication extends Application {
 	public Restlet createInBoundRoot() {
 		Router router = new Router(getContext());
 		
-		router.attach("/database/conta", ContaServerResource.class);
-		router.attach("/database/pessoafisica", PessoaFisicaServerResource.class);
-		router.attach("/database/pessoajuridica", PessoaJuridicaServerResource.class);
-		router.attach("/database/transferencia", TransferenciaServerResource.class);
+		router.attach("/conta", ContaServerResource.class);
+		router.attach("/pessoafisica/", PessoaFisicaServerResource.class);
+		router.attach("/pessoajuridica", PessoaJuridicaServerResource.class);
+		router.attach("/transferencia", TransferenciaServerResource.class);
 		
 		return router;
 	}
