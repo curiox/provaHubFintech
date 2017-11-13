@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import org.provaHubFintech.server.DatabaseServerApplication;
 import org.provaHubFintech.singleton.ConfigSingleton;
 
 public class WebBrowser extends JFrame {
@@ -55,6 +56,8 @@ public class WebBrowser extends JFrame {
 	}
 
 	public static void main(String[] args) {
+		DatabaseServerApplication app = new DatabaseServerApplication();
+		app.createInBoundRoot();
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
@@ -62,7 +65,6 @@ public class WebBrowser extends JFrame {
 				browser.setVisible(true);
 			}
 		});
-		
 	}
 	
 	
