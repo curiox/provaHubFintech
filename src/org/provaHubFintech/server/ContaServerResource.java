@@ -2,6 +2,7 @@ package org.provaHubFintech.server;
 
 import org.restlet.resource.Get;
 import org.restlet.resource.Post;
+import org.restlet.resource.Put;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -9,7 +10,6 @@ import java.sql.SQLException;
 import java.sql.PreparedStatement;
 
 import org.restlet.resource.Delete;
-import org.restlet.resource.Patch;
 import org.restlet.resource.ServerResource;
 import org.provaHubFintech.controller.ConnectionProvider;
 import org.restlet.Request;
@@ -60,7 +60,7 @@ public class ContaServerResource extends ServerResource {
 		
 	}
 	
-	@Patch
+	@Put
 	public void atualiza() {
 		
 	}

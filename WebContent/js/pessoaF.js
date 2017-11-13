@@ -12,11 +12,27 @@ $(document).ready(function () {
 	});
 
 	$("#removePessoaF").click(function() {
-		
+		$.delete("http://localhost:8080/database/pessoafisica",
+				{
+			cpf: $("#CPF").val(),
+			nomeComp: $("#NomeComp").val(),
+			dataNasc: $("#dataNasc").val()
+				},
+				function (data, status) {
+					
+				})
 	});
 
 	$("#updatePessoaF").click(function () {
-		
+		$.put("http://localhost:8080/database/pessoafisica",
+				{
+			cpf: $("#CPF").val(),
+			nomeComp: $("#NomeComp").val(),
+			dataNasc: $("#dataNasc").val()
+				},
+				function (data, status) {
+					
+				})
 	});
 
 	$("#consultaPessoaF").click(function () {

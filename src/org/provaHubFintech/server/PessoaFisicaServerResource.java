@@ -16,7 +16,7 @@ import org.restlet.Request;
 import org.restlet.Response;
 import org.restlet.data.Status;
 import org.restlet.resource.Delete;
-import org.restlet.resource.Patch;
+import org.restlet.resource.Put;
 import org.restlet.resource.ServerResource;
 
 public class PessoaFisicaServerResource extends ServerResource {
@@ -49,6 +49,7 @@ public class PessoaFisicaServerResource extends ServerResource {
 	
 	@Post
 	public void adiciona() {
+		System.out.print("Hello World");
 		Connection c = null;
 		Request req = getRequest();
 		String cpf = (String) req.getAttributes().get("cpf"),
@@ -77,7 +78,7 @@ public class PessoaFisicaServerResource extends ServerResource {
 		
 	}
 	
-	@Patch
+	@Put
 	public void atualiza() {
 		
 	}
