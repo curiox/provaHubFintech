@@ -1,40 +1,42 @@
-$("#addConta").click(function() {
-	var today = new Date();
-	var dd = today.getDate();
-	var mm = today.getMonth()+1; //January is 0!
-	var yyyy = today.getFullYear();
-
-	if(dd<10) {
-	    dd = '0'+dd
-	} 
-
-	if(mm<10) {
-	    mm = '0'+mm
-	} 
-
-	today = dd + '/' + mm + '/' + yyyy;
+$(document).ready(function () {
+	$("#addConta").click(function() {
+		var today = new Date();
+		var dd = today.getDate();
+		var mm = today.getMonth()+1; //January is 0!
+		var yyyy = today.getFullYear();
 	
-	$.post("/database/conta",
-	{
-		nome: $("#Nome").val(),
-		cnpj: $("#CNPJ").val(),
-		cpf: $("#CPF").val(),
-		tipoConta: $("#tipoConta").val(),
-		data: today
-	},
-	function (data, status) {
+		if(dd<10) {
+		    dd = '0'+dd
+		} 
+	
+		if(mm<10) {
+		    mm = '0'+mm
+		} 
+	
+		today = dd + '/' + mm + '/' + yyyy;
+		
+		$.post("/database/conta",
+		{
+			nome: $("#Nome").val(),
+			cnpj: $("#CNPJ").val(),
+			cpf: $("#CPF").val(),
+			tipoConta: $("#tipoConta").val(),
+			data: today
+		},
+		function (data, status) {
+			
+		});
+	});
+	
+	$("#removeConta").click(function() {
 		
 	});
-});
-
-$("#removeConta").click(function() {
 	
-});
-
-$("#updateConta").click(function () {
+	$("#updateConta").click(function () {
+		
+	});
 	
-});
-
-$("#consultaConta").click(function () {
-	
-});
+	$("#consultaConta").click(function () {
+		
+	});
+})

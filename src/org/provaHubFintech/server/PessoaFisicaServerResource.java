@@ -6,9 +6,12 @@ import org.restlet.resource.Post;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import org.provaHubFintech.controller.ConnectionProvider;
+import org.provaHubFintech.model.PessoaFisica;
 import org.restlet.Request;
 import org.restlet.Response;
 import org.restlet.data.Status;
@@ -18,9 +21,30 @@ import org.restlet.resource.ServerResource;
 
 public class PessoaFisicaServerResource extends ServerResource {
 	
+	private int contador = 0;
+	
 	@Get
 	public void consulta() {
-		
+		Connection c = null;
+		try {
+			c = ConnectionProvider.getConnection();
+			Statement stmt = c.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM PROVA.PESSOA_FISICA");
+			Response res = getResponse();
+			while(rs.next()) {
+				PessoaFisica pf = new PessoaFisica();
+				pf.setCpf(rs.getString("cpf"));
+				pf.setDataNasc(rs.getDate("dataNasc"));
+				pf.setNomeCompleto(rs.getString("nomeCompleto"));
+				res.getAttributes().putIfAbsent("cliente" + contador++, pf);
+			}
+			res.setStatus(Status.SUCCESS_ACCEPTED);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			Response res = getResponse();
+			res.setStatus(Status.CLIENT_ERROR_EXPECTATION_FAILED);
+			res.abort();
+		}
 	}
 	
 	@Post

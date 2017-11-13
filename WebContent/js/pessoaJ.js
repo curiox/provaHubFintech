@@ -1,15 +1,17 @@
-$("#addPessoaJ").click(function() {
+$(document).ready(function () {
+	$("#addPessoaJ").click(function() {
+		
+	});
 	
-});
-
-$("#removePessoaJ").click(function() {
+	$("#removePessoaJ").click(function() {
+		
+	});
 	
-});
-
-$("#updatePessoaJ").click(function () {
+	$("#updatePessoaJ").click(function () {
+		
+	});
 	
-});
-
-$("#consultaPessoaJ").click(function () {
-	
-});
+	$("#consultaPessoaJ").click(function () {
+		
+	});
+})
