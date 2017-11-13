@@ -1,5 +1,6 @@
 $(document).ready(function () {
-	$("#addConta").click(function() {
+	
+	getDate = function () {
 		var today = new Date();
 		var dd = today.getDate();
 		var mm = today.getMonth()+1; //January is 0!
@@ -13,7 +14,11 @@ $(document).ready(function () {
 		    mm = '0'+mm
 		} 
 	
-		today = dd + '/' + mm + '/' + yyyy;
+		return today = dd + '/' + mm + '/' + yyyy;
+	}
+	
+	$("#addConta").click(function() {
+		var today = getDate();
 		
 		$.post("http://localhost:8080/database/conta",
 		{
@@ -29,6 +34,8 @@ $(document).ready(function () {
 	});
 	
 	$("#removeConta").click(function() {
+		var today = getDate();
+		
 		$.delete("http://localhost:8080/database/conta",
 				{
 			nome: $("#Nome").val(),
@@ -43,6 +50,8 @@ $(document).ready(function () {
 	});
 	
 	$("#updateConta").click(function () {
+		var today = getDate();
+		
 		$.put("http://localhost:8080/database/conta",
 				{
 			nome: $("#Nome").val(),
