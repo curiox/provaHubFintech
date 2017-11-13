@@ -49,8 +49,7 @@ public class PessoaFisicaServerResource extends ServerResource {
 	
 	@Post
 	public void adiciona() {
-		System.out.println("Hello");
-		/*Connection c = null;
+		Connection c = null;
 		Request req = getRequest();
 		String cpf = (String) req.getAttributes().get("cpf"),
 				nomeComp = (String) req.getAttributes().get("nomeComp");
@@ -70,7 +69,7 @@ public class PessoaFisicaServerResource extends ServerResource {
 			Response res = getResponse();
 			res.setStatus(Status.CLIENT_ERROR_EXPECTATION_FAILED);
 			res.abort();
-		}*/
+		}
 	}
 	
 	@Delete

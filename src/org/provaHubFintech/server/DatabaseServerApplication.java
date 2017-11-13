@@ -10,7 +10,7 @@ public class DatabaseServerApplication extends Application {
 		Router router = new Router(getContext());
 		
 		router.attach("/conta", ContaServerResource.class);
-		router.attach("/pessoafisica/", PessoaFisicaServerResource.class);
+		router.attach("/pessoafisica", PessoaFisicaServerResource.class);
 		router.attach("/pessoajuridica", PessoaJuridicaServerResource.class);
 		router.attach("/transferencia", TransferenciaServerResource.class);
 		
