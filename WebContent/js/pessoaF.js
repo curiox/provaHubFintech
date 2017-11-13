@@ -27,8 +27,11 @@ $(document).ready(function () {
 		$.put("http://localhost:8080/database/pessoafisica",
 				{
 			cpf: $("#CPF").val(),
+			cpfNovo: $("#CPFNovo").val,
 			nomeComp: $("#NomeComp").val(),
-			dataNasc: $("#dataNasc").val()
+			nomeCompNovo: $("#NomeCompNovo").val(),
+			dataNasc: $("#dataNasc").val(),
+			dataNascNovo: $("#dataNascNovo").val()
 				},
 				function (data, status) {
 					

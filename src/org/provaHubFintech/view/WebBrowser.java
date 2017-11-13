@@ -16,6 +16,7 @@ import org.provaHubFintech.server.DatabaseServerApplication;
 import org.provaHubFintech.singleton.ConfigSingleton;
 import org.restlet.Component;
 import org.restlet.data.Protocol;
+import org.restlet.service.LogService;
 
 public class WebBrowser extends JFrame {
 	
@@ -64,6 +65,7 @@ public class WebBrowser extends JFrame {
 			DatabaseServerApplication app = new DatabaseServerApplication();
 			app.createInBoundRoot();
 			comp.getDefaultHost().attach("/database", app);
+			comp.setLogService(new LogService(true));
 			comp.start();
 			SwingUtilities.invokeLater(new Runnable() {
 				@Override

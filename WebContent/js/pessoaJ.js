@@ -27,8 +27,11 @@ $(document).ready(function () {
 		$.put("http://localhost:8080/database/pessoajuridica",
 				{
 			cnpj: $("#CNPJ").val(),
+			cnpjnovo: $("#CNPJNovo").val(),
 			razSoc: $("#razSoc").val(),
-			nomFan: $("#nomFan").val()
+			razSocNovo: $("#razSocNovo").val(),
+			nomFan: $("#nomFan").val(),
+			nomFanNovo: $("#nomFanNovo").val()
 				},
 				function (data, status) {
 					

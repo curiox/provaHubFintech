@@ -27,8 +27,11 @@ $(document).ready(function () {
 		$.put("http://localhost:8080/database/transferencia",
 				{
 			origem: $("#cntOrigem").val(),
+			origemNova: $("#cntOrigemNova").val(),
 			destino: $("#cntDestino").val(),
-			quantia: $("#quantia").val()
+			destinoNovo: $("#cntDestinoNova").val(),
+			quantia: $("#quantia").val(),
+			quantiaNova: $("#quantiaNova").val()
 				},
 				function (data, status) {
 					

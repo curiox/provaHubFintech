@@ -36,7 +36,7 @@ public class PessoaFisicaServerResource extends ServerResource {
 				pf.setCpf(rs.getString("cpf"));
 				pf.setDataNasc(rs.getDate("dataNasc"));
 				pf.setNomeCompleto(rs.getString("nomeCompleto"));
-				res.getAttributes().putIfAbsent("cliente" + contador++, pf);
+				res.getAttributes().putIfAbsent("clienteF" + contador++, pf);
 			}
 			res.setStatus(Status.SUCCESS_ACCEPTED);
 		} catch (SQLException e) {
@@ -74,12 +74,61 @@ public class PessoaFisicaServerResource extends ServerResource {
 	
 	@Delete
 	public void remove() {
-		
+		Connection c = null;
+		Request req = getRequest();
+		String cpf = (String) req.getAttributes().get("cpf"),
+				nomeComp = (String) req.getAttributes().get("nomeComp");
+		Date dataNasc = (Date) req.getAttributes().get("dataNasc");
+		try {
+			c = ConnectionProvider.getConnection();
+			PreparedStatement ps =  c.prepareStatement("DELETE FROM PESSOA_FISICA WHERE cpf = ? AND nomeCompleto = ? AND dataNasc = ?;");
+			ps.setString(1, cpf);
+			ps.setString(2, nomeComp);
+			ps.setDate(3, dataNasc);
+			int rowsAffected = ps.executeUpdate();
+			Response res = getResponse();
+			res.getAttributes().putIfAbsent("rowsAffected", rowsAffected);
+			res.setStatus(Status.SUCCESS_ACCEPTED);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			Response res = getResponse();
+			res.setStatus(Status.CLIENT_ERROR_EXPECTATION_FAILED);
+			res.abort();
+		}
 	}
 	
 	@Put
 	public void atualiza() {
-		
+		Connection c = null;
+		Request req = getRequest();
+		String cpf = (String) req.getAttributes().get("cpf"),
+				cpfNovo = (String) req.getAttributes().get("cpfNovo"),
+				nomeComp = (String) req.getAttributes().get("nomeComp"),
+				nomeCompNovo = (String) req.getAttributes().get("nomeCompNovo");
+		Date dataNasc = (Date) req.getAttributes().get("dataNasc"),
+				dataNascNovo = (Date) req.getAttributes().get("dataNascNovo");
+		try {
+			c = ConnectionProvider.getConnection();
+			PreparedStatement ps =
+					c.prepareStatement("UPDATE PESSOA_FISICA"
+							+ " SET cpf = ? AND nomeCompleto = ? AND dataNasc = ?"
+							+ " WHERE cpf = ? AND nomeCompleto = ? AND dataNasc = ?");
+			ps.setString(1, cpfNovo);
+			ps.setString(2, nomeCompNovo);
+			ps.setDate(3, dataNascNovo);
+			ps.setString(4, cpf);
+			ps.setString(5, nomeComp);
+			ps.setDate(6, dataNasc);
+			int rowsAffected = ps.executeUpdate();
+			Response res = getResponse();
+			res.getAttributes().putIfAbsent("rowsAffected", rowsAffected);
+			res.setStatus(Status.SUCCESS_ACCEPTED);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			Response res = getResponse();
+			res.setStatus(Status.CLIENT_ERROR_EXPECTATION_FAILED);
+			res.abort();
+		}
 	}
 
 }

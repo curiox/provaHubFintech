@@ -55,9 +55,13 @@ $(document).ready(function () {
 		$.put("http://localhost:8080/database/conta",
 				{
 			nome: $("#Nome").val(),
+			nomeNovo: $("#NomeNovo").val(),
 			cnpj: $("#CNPJ").val(),
+			cnpjNovo: $("#CNPJNovo").val(),
 			cpf: $("#CPF").val(),
+			cpfNovo: $("#CPFNovo").val(),
 			tipoConta: $("#tipoConta").val(),
+			tipoContaNovo: $("#tipoContaNovo").val(),
 			data: today
 				},
 				function (data, status) {
