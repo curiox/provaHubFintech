@@ -1,10 +1,4 @@
 $(document).ready(function () {
-	/*function showValues() {
-		var str = $("form").serialize();
-		$("#messages").html(str);
-	}
-	
-	$("#addPessoaF").on("click", showValues);*/
 	$("#addPessoaF").click(function() {		
 		$.post("http://localhost:8080/database/pessoafisica",
 				$("form").serialize(),
