@@ -16,7 +16,6 @@ import org.provaHubFintech.server.DatabaseServerApplication;
 import org.provaHubFintech.singleton.ConfigSingleton;
 import org.restlet.Component;
 import org.restlet.data.Protocol;
-import org.restlet.service.LogService;
 
 public class WebBrowser extends JFrame {
 	

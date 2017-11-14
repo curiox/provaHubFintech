@@ -6,6 +6,9 @@ public class PessoaJuridica {
 	String razaoSocial;
 	String nomeFantasia;
 	
+	public String toString() {
+		return cnpj + "," + razaoSocial + "," + nomeFantasia;
+	}
 	public String getCnpj() {
 		return cnpj;
 	}

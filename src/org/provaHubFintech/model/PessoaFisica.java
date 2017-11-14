@@ -7,6 +7,9 @@ public class PessoaFisica {
 	String nomeCompleto;
 	Date dataNasc;
 	
+	public String toString() {
+		return cpf + "," + nomeCompleto + "," + dataNasc;
+	}
 	public String getCpf() {
 		return cpf;
 	}

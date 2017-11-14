@@ -41,7 +41,7 @@ $(document).ready(function () {
 	$("#consultaTransacao").click(function () {
 		$.get("http://localhost:8080/database/transferencia",
 				function (data, status) {
-			$("#messages").html(status + " " + data);
+			$("#messages").html(status + "<br>" + data);
 		})
 	});
 })

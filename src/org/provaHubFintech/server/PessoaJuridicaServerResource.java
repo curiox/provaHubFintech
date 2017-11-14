@@ -8,19 +8,19 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import org.provaHubFintech.controller.ConnectionProvider;
 import org.provaHubFintech.model.PessoaJuridica;
 import org.restlet.Request;
 import org.restlet.Response;
+import org.restlet.data.MediaType;
 import org.restlet.data.Status;
 import org.restlet.resource.Delete;
 import org.restlet.resource.Put;
 import org.restlet.resource.ServerResource;
 
 public class PessoaJuridicaServerResource extends ServerResource {
-	
-	private int contador = 1;
 
 	@Get
 	public Response consulta() {
@@ -30,13 +30,20 @@ public class PessoaJuridicaServerResource extends ServerResource {
 			Statement stmt = c.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM PROVA.PESSOA_JURIDICA");
 			Response res = getResponse();
+			ArrayList<PessoaJuridica> lista = new ArrayList<>();
 			while(rs.next()) {
-				PessoaJuridica pf = new PessoaJuridica();
-				pf.setCnpj(rs.getString("CNPJ"));
-				pf.setRazaoSocial(rs.getString("RazaoSocial"));
-				pf.setNomeFantasia(rs.getString("NomeFantasia"));
-				res.getAttributes().putIfAbsent("clienteJ" + contador++, pf);
+				PessoaJuridica pj = new PessoaJuridica();
+				pj.setCnpj(rs.getString("CNPJ"));
+				pj.setRazaoSocial(rs.getString("RazaoSocial"));
+				pj.setNomeFantasia(rs.getString("NomeFantasia"));
+				lista.add(pj);
 			}
+			String result = "[";
+			for(PessoaJuridica p : lista) {
+				result += p.toString();
+			}
+			result += "]";
+			res.setEntity(result, MediaType.TEXT_PLAIN);
 			res.setStatus(Status.SUCCESS_ACCEPTED);
 			return res;
 		} catch (SQLException e) {

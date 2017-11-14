@@ -41,7 +41,7 @@ $(document).ready(function () {
 	$("#consultaPessoaJ").click(function () {
 		$.get("http://localhost:8080/database/pessoajuridica",
 				function (data, status) {
-			$("#messages").html(status + " " + data);
+			$("#messages").html(status + "<br>" + data);
 		})
 	});
 })

@@ -5,11 +5,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import org.provaHubFintech.controller.ConnectionProvider;
 import org.provaHubFintech.model.Transferencia;
 import org.restlet.Request;
 import org.restlet.Response;
+import org.restlet.data.MediaType;
 import org.restlet.data.Status;
 import org.restlet.resource.Delete;
 import org.restlet.resource.Get;
@@ -18,8 +20,6 @@ import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
 
 public class TransferenciaServerResource extends ServerResource {
-
-	private int contador = 0;
 	
 	@Get
 	public Response consulta() {
@@ -29,13 +29,20 @@ public class TransferenciaServerResource extends ServerResource {
 			Statement stmt = c.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM PROVA.TRANSFERENCIA");
 			Response res = getResponse();
+			ArrayList<Transferencia> lista = new ArrayList<>();
 			while(rs.next()) {
 				Transferencia trans = new Transferencia();
 				trans.setIdContaOrigem(rs.getInt("idContaOrigem"));
 				trans.setIdContaDestino(rs.getInt("idContaDestino"));
 				trans.setQuantia(rs.getFloat("quantia"));
-				res.getAttributes().putIfAbsent("transferencia" + contador++, trans);
+				lista.add(trans);
 			}
+			String result = "[";
+			for (Transferencia t : lista) {
+				result += t.toString();
+			}
+			result += "]";
+			res.setEntity(result, MediaType.TEXT_PLAIN);
 			res.setStatus(Status.SUCCESS_ACCEPTED);
 			return res;
 		} catch (SQLException e) {

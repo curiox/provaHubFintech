@@ -41,7 +41,7 @@ $(document).ready(function () {
 	$("#consultaPessoaF").click(function () {
 		$.get("http://localhost:8080/database/pessoafisica",
 				function (data, status) {
-				$("#messages").html(status + " " + data);
+				$("#messages").html(status + "<br>" + data);
 		});
 	});
 })

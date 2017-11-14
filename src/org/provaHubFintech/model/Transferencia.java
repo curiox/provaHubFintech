@@ -4,6 +4,10 @@ public class Transferencia {
 	int idContaOrigem;
 	int idContaDestino;
 	float quantia;
+	
+	public String toString() {
+		return idContaOrigem + ";" + idContaDestino + ";" + quantia;
+	}
 	public int getIdContaOrigem() {
 		return idContaOrigem;
 	}

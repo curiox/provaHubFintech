@@ -1,29 +1,26 @@
 package org.provaHubFintech.server;
 
-import org.restlet.resource.Get;
-import org.restlet.resource.Post;
-
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import org.provaHubFintech.controller.ConnectionProvider;
 import org.provaHubFintech.model.PessoaFisica;
 import org.restlet.Request;
 import org.restlet.Response;
-import org.restlet.data.Header;
+import org.restlet.data.MediaType;
 import org.restlet.data.Status;
 import org.restlet.resource.Delete;
+import org.restlet.resource.Get;
+import org.restlet.resource.Post;
 import org.restlet.resource.Put;
 import org.restlet.resource.ServerResource;
-import org.restlet.util.Series;
 
 public class PessoaFisicaServerResource extends ServerResource {
-	
-	private int contador = 1;
 	
 	@Get
 	public Response consulta() {
@@ -33,20 +30,21 @@ public class PessoaFisicaServerResource extends ServerResource {
 			Statement stmt = c.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM PROVA.PESSOA_FISICA");
 			Response res = getResponse();
+			ArrayList<PessoaFisica> lista = new ArrayList<>();
 			while(rs.next()) {
 				PessoaFisica pf = new PessoaFisica();
 				pf.setCpf(rs.getString("cpf"));
 				pf.setDataNasc(rs.getDate("dataNasc"));
 				pf.setNomeCompleto(rs.getString("nomeCompleto"));
-				res.getAttributes().putIfAbsent("clienteF" + contador++, pf);
+				lista.add(pf);
 			}
+			String result = "[";
+			for(PessoaFisica p : lista) {
+				result += p.toString();
+			}
+			result += "]";
+			res.setEntity(result, MediaType.TEXT_PLAIN);
 			res.setStatus(Status.SUCCESS_ACCEPTED);
-			Series<Header> responseHeaders = (Series<Header>) res.getAttributes().get("org.restlet.http.headers");
-			if(responseHeaders == null) {
-				responseHeaders = new Series<Header>(Header.class);
-				res.getAttributes().put("org.restlet.http.headers", responseHeaders);
-			}
-			responseHeaders.add(new Header("Access-Control-Allow-Origin", "*"));
 			return res;
 		} catch (SQLException e) {
 			e.printStackTrace();

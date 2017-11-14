@@ -9,20 +9,15 @@ public class Conta {
 	String cnpj;
 	String cpf;
 	String tipoConta;
-	boolean ativo;
 	
-	
+	public String toString() {
+		return idConta + "," + nome + "," + dataCriacao + "," + cnpj + "," + cpf + "," + tipoConta;
+	}
 	public int getIdConta() {
 		return idConta;
 	}
 	public void setIdConta(int idConta) {
 		this.idConta = idConta;
-	}
-	public boolean isAtivo() {
-		return ativo;
-	}
-	public void setAtivo(boolean ativo) {
-		this.ativo = ativo;
 	}
 	public String getNome() {
 		return nome;
