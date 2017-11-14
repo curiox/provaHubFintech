@@ -21,29 +21,16 @@ $(document).ready(function () {
 		var today = getDate();
 		
 		$.post("http://localhost:8080/database/conta",
-		{
-			nome: $("#Nome").val(),
-			cnpj: $("#CNPJ").val(),
-			cpf: $("#CPF").val(),
-			tipoConta: $("#tipoConta").val(),
-			data: today
-		},
+		$("#account-form").serialize(),
 		function (data, status) {
 			$("#messages").html(status + "<br>" + data);
 		});
 	});
 	
 	$("#removeConta").click(function() {
-		var today = getDate();
 		
 		$.delete("http://localhost:8080/database/conta",
-				{
-			nome: $("#Nome").val(),
-			cnpj: $("#CNPJ").val(),
-			cpf: $("#CPF").val(),
-			tipoConta: $("#tipoConta").val(),
-			data: today
-				},
+				$("#account-form").serialize(),
 				function (data, status) {
 					$("#messages").html(status + "<br>" + data);
 				})
@@ -53,17 +40,7 @@ $(document).ready(function () {
 		var today = getDate();
 		
 		$.put("http://localhost:8080/database/conta",
-				{
-			nome: $("#Nome").val(),
-			nomeNovo: $("#NomeNovo").val(),
-			cnpj: $("#CNPJ").val(),
-			cnpjNovo: $("#CNPJNovo").val(),
-			cpf: $("#CPF").val(),
-			cpfNovo: $("#CPFNovo").val(),
-			tipoConta: $("#tipoConta").val(),
-			tipoContaNovo: $("#tipoContaNovo").val(),
-			data: today
-				},
+				$("#account-form").serialize(),
 				function (data, status) {
 					$("#messages").html(status + "<br>" + data);
 				})

@@ -1,11 +1,13 @@
-$(document).ready(function () {	
-	$("#addPessoaF").click(function() {
+$(document).ready(function () {
+	/*function showValues() {
+		var str = $("form").serialize();
+		$("#messages").html(str);
+	}
+	
+	$("#addPessoaF").on("click", showValues);*/
+	$("#addPessoaF").click(function() {		
 		$.post("http://localhost:8080/database/pessoafisica",
-				{
-			cpf: $("#CPF").val(),
-			nomeComp: $("#NomeComp").val(),
-			dataNasc: $("#dataNasc").val()
-				},
+				$("form").serialize(),
 				function (data, status) {
 					$("#messages").html(data + " " + status);
 			});
@@ -13,11 +15,12 @@ $(document).ready(function () {
 
 	$("#removePessoaF").click(function() {
 		$.delete("http://localhost:8080/database/pessoafisica",
-				{
+				$("#pfForm").serialize()
+				/*{
 			cpf: $("#CPF").val(),
 			nomeComp: $("#NomeComp").val(),
 			dataNasc: $("#dataNasc").val()
-				},
+				}*/,
 				function (data, status) {
 					$("#messages").html(status + "<br>" + data);
 				})
