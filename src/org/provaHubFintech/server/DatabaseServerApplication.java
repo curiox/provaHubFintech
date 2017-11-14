@@ -6,7 +6,8 @@ import org.restlet.routing.Router;
 
 public class DatabaseServerApplication extends Application {
 
-	public Restlet createInBoundRoot() {
+	@Override
+	public Restlet createInboundRoot() {
 		Router router = new Router(getContext());
 		
 		router.attach("/conta", ContaServerResource.class);

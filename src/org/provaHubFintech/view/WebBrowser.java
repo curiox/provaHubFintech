@@ -61,11 +61,10 @@ public class WebBrowser extends JFrame {
 	public static void main(String[] args) {
 		try {
 			Component comp = new Component();
-			comp.getServers().add(Protocol.HTTP, 8080);
 			DatabaseServerApplication app = new DatabaseServerApplication();
-			app.createInBoundRoot();
+			app.createInboundRoot();
+			comp.getServers().add(Protocol.HTTP, 8080);
 			comp.getDefaultHost().attach("/database", app);
-			comp.setLogService(new LogService(true));
 			comp.start();
 			SwingUtilities.invokeLater(new Runnable() {
 				@Override

@@ -24,7 +24,7 @@ public class ContaServerResource extends ServerResource {
 	private static int contador = 1;
 
 	@Get
-	public void consulta() {
+	public Response consulta() {
 		Connection c = null;
 		try {
 			c = ConnectionProvider.getConnection();
@@ -41,16 +41,17 @@ public class ContaServerResource extends ServerResource {
 				res.getAttributes().putIfAbsent("conta" + contador++, co);
 			}
 			res.setStatus(Status.SUCCESS_ACCEPTED);
+			return res;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			Response res = getResponse();
 			res.setStatus(Status.CLIENT_ERROR_EXPECTATION_FAILED);
-			res.abort();
+			return res;
 		}
 	}
 	
 	@Post
-	public void adiciona() {
+	public Response adiciona() {
 		Connection c = null;
 		Request req = getRequest();
 		String nome = (String) req.getAttributes().get("nome"),
@@ -71,16 +72,17 @@ public class ContaServerResource extends ServerResource {
 			Response resp = getResponse();
 			resp.getAttributes().putIfAbsent("rowsAffected", rowsAffected);
 			resp.setStatus(Status.SUCCESS_ACCEPTED);
+			return resp;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			Response res = getResponse();
 			res.setStatus(Status.CLIENT_ERROR_EXPECTATION_FAILED);
-			res.abort();
+			return res;
 		}
 	}
 	
 	@Delete
-	public void remove() {
+	public Response remove() {
 		Connection c = null;
 		Request req = getRequest();
 		String cpf = (String) req.getAttributes().get("cpf"),
@@ -103,16 +105,17 @@ public class ContaServerResource extends ServerResource {
 			Response res = getResponse();
 			res.getAttributes().putIfAbsent("rowsAffected", rowsAffected);
 			res.setStatus(Status.SUCCESS_ACCEPTED);
+			return res;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			Response res = getResponse();
 			res.setStatus(Status.CLIENT_ERROR_EXPECTATION_FAILED);
-			res.abort();
+			return res;
 		}
 	}
 	
 	@Put
-	public void atualiza() {
+	public Response atualiza() {
 		Connection c = null;
 		Request req = getRequest();
 		String nome = (String) req.getAttributes().get("nome"),
@@ -145,11 +148,12 @@ public class ContaServerResource extends ServerResource {
 			Response res = getResponse();
 			res.getAttributes().putIfAbsent("rowsAffected", rowsAffected);
 			res.setStatus(Status.SUCCESS_ACCEPTED);
+			return res;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			Response res = getResponse();
 			res.setStatus(Status.CLIENT_ERROR_EXPECTATION_FAILED);
-			res.abort();
+			return res;
 		}
 	}
 	

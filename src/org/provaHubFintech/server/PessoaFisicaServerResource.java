@@ -14,17 +14,19 @@ import org.provaHubFintech.controller.ConnectionProvider;
 import org.provaHubFintech.model.PessoaFisica;
 import org.restlet.Request;
 import org.restlet.Response;
+import org.restlet.data.Header;
 import org.restlet.data.Status;
 import org.restlet.resource.Delete;
 import org.restlet.resource.Put;
 import org.restlet.resource.ServerResource;
+import org.restlet.util.Series;
 
 public class PessoaFisicaServerResource extends ServerResource {
 	
 	private int contador = 1;
 	
 	@Get
-	public void consulta() {
+	public Response consulta() {
 		Connection c = null;
 		try {
 			c = ConnectionProvider.getConnection();
@@ -39,16 +41,23 @@ public class PessoaFisicaServerResource extends ServerResource {
 				res.getAttributes().putIfAbsent("clienteF" + contador++, pf);
 			}
 			res.setStatus(Status.SUCCESS_ACCEPTED);
+			Series<Header> responseHeaders = (Series<Header>) res.getAttributes().get("org.restlet.http.headers");
+			if(responseHeaders == null) {
+				responseHeaders = new Series<Header>(Header.class);
+				res.getAttributes().put("org.restlet.http.headers", responseHeaders);
+			}
+			responseHeaders.add(new Header("Access-Control-Allow-Origin", "*"));
+			return res;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			Response res = getResponse();
 			res.setStatus(Status.CLIENT_ERROR_EXPECTATION_FAILED);
-			res.abort();
+			return res;
 		}
 	}
 	
 	@Post
-	public void adiciona() {
+	public Response adiciona() {
 		Connection c = null;
 		Request req = getRequest();
 		String cpf = (String) req.getAttributes().get("cpf"),
@@ -64,16 +73,17 @@ public class PessoaFisicaServerResource extends ServerResource {
 			Response res = getResponse();
 			res.getAttributes().putIfAbsent("rowsAffected", rowsAffected);
 			res.setStatus(Status.SUCCESS_ACCEPTED);
+			return res;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			Response res = getResponse();
 			res.setStatus(Status.CLIENT_ERROR_EXPECTATION_FAILED);
-			res.abort();
+			return res;
 		}
 	}
 	
 	@Delete
-	public void remove() {
+	public Response remove() {
 		Connection c = null;
 		Request req = getRequest();
 		String cpf = (String) req.getAttributes().get("cpf"),
@@ -89,16 +99,17 @@ public class PessoaFisicaServerResource extends ServerResource {
 			Response res = getResponse();
 			res.getAttributes().putIfAbsent("rowsAffected", rowsAffected);
 			res.setStatus(Status.SUCCESS_ACCEPTED);
+			return res;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			Response res = getResponse();
 			res.setStatus(Status.CLIENT_ERROR_EXPECTATION_FAILED);
-			res.abort();
+			return res;
 		}
 	}
 	
 	@Put
-	public void atualiza() {
+	public Response atualiza() {
 		Connection c = null;
 		Request req = getRequest();
 		String cpf = (String) req.getAttributes().get("cpf"),
@@ -123,11 +134,12 @@ public class PessoaFisicaServerResource extends ServerResource {
 			Response res = getResponse();
 			res.getAttributes().putIfAbsent("rowsAffected", rowsAffected);
 			res.setStatus(Status.SUCCESS_ACCEPTED);
+			return res;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			Response res = getResponse();
 			res.setStatus(Status.CLIENT_ERROR_EXPECTATION_FAILED);
-			res.abort();
+			return res;
 		}
 	}
 
