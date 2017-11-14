@@ -29,7 +29,7 @@ $(document).ready(function () {
 	
 	$("#removeConta").click(function() {
 		
-		$.delete("http://localhost:8080/database/conta",
+		$.post("http://localhost:8080/database/conta/delete",
 				$("#account-form").serialize(),
 				function (data, status) {
 					$("#messages").html(status + "<br>" + data);
@@ -39,7 +39,7 @@ $(document).ready(function () {
 	$("#updateConta").click(function () {
 		var today = getDate();
 		
-		$.put("http://localhost:8080/database/conta",
+		$.post("http://localhost:8080/database/conta/update",
 				$("#account-form").serialize(),
 				function (data, status) {
 					$("#messages").html(status + "<br>" + data);
