@@ -4,6 +4,7 @@ public class Transferencia {
 	int idContaOrigem;
 	int idContaDestino;
 	float quantia;
+	String codAporte;
 	
 	public String toString() {
 		return idContaOrigem + ";" + idContaDestino + ";" + quantia;
@@ -25,5 +26,11 @@ public class Transferencia {
 	}
 	public void setQuantia(float quantia) {
 		this.quantia = quantia;
+	}
+	public String getCodAporte() {
+		return codAporte;
+	}
+	public void setCodAporte(String codAporte) {
+		this.codAporte = codAporte;
 	}
 }

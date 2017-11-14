@@ -35,6 +35,7 @@ public class TransferenciaServerResource extends ServerResource {
 				trans.setIdContaOrigem(rs.getInt("idContaOrigem"));
 				trans.setIdContaDestino(rs.getInt("idContaDestino"));
 				trans.setQuantia(rs.getFloat("quantia"));
+				trans.setCodAporte(rs.getString("codAporte"));
 				lista.add(trans);
 			}
 			String result = "[";
@@ -60,12 +61,14 @@ public class TransferenciaServerResource extends ServerResource {
 		int cntOrigem = (int) req.getAttributes().get("origem"),
 				cntDestino = (int) req.getAttributes().get("destino");
 		float quantia = (float) req.getAttributes().get("quantia");
+		String aporte = (String) req.getAttributes().get("aporte");
 		try {
 			c = ConnectionProvider.getConnection();
-			PreparedStatement ps = c.prepareStatement("INSERT INTO TRANSFERENCIA VALUES (?, ?, ?);");
+			PreparedStatement ps = c.prepareStatement("INSERT INTO TRANSFERENCIA VALUES (?, ?, ?, ?);");
 			ps.setInt(1, cntOrigem);
 			ps.setInt(2, cntDestino);
 			ps.setFloat(3, quantia);
+			ps.setString(4, aporte);
 			int rowsAffected = ps.executeUpdate();
 			Response res = getResponse();
 			res.setEntity(rowsAffected+" linha(s) afetada(s)", MediaType.TEXT_PLAIN);
@@ -86,12 +89,14 @@ public class TransferenciaServerResource extends ServerResource {
 		int origem = (int) req.getAttributes().get("origem"),
 				destino = (int) req.getAttributes().get("destino");
 		float quantia = (float) req.getAttributes().get("quantia");
+		String aporte = (String) req.getAttributes().get("aporte");
 		try {
 			c = ConnectionProvider.getConnection();
 			PreparedStatement ps =  c.prepareStatement("DELETE FROM TRANSFERENCIA WHERE idContaOrigem = ? AND idContaDestino = ? AND quantia = ?;");
 			ps.setInt(1, origem);
 			ps.setInt(2, destino);
 			ps.setFloat(3, quantia);
+			ps.setString(4, aporte);
 			int rowsAffected = ps.executeUpdate();
 			Response res = getResponse();
 			res.setEntity(rowsAffected+" linha(s) afetada(s)", MediaType.TEXT_PLAIN);

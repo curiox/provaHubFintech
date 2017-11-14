@@ -7,7 +7,7 @@ $(document).ready(function () {
 			nomFan: $("#nomFan").val()
 				},
 				function (data, status) {
-					
+					$("#messages").html(status + "<br>" + data);
 				})
 	});
 	
@@ -19,7 +19,7 @@ $(document).ready(function () {
 			nomFan: $("#nomFan").val()
 				},
 				function (data, status) {
-					
+					$("#messages").html(status + "<br>" + data);
 				})
 	});
 	
@@ -34,7 +34,7 @@ $(document).ready(function () {
 			nomFanNovo: $("#nomFanNovo").val()
 				},
 				function (data, status) {
-					
+					$("#messages").html(status + "<br>" + data);
 				})
 	});
 	

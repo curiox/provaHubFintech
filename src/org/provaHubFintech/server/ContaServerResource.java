@@ -42,7 +42,7 @@ public class ContaServerResource extends ServerResource {
 				co.setCpf(rs.getString("CPF"));
 				co.setDataCriacao(rs.getDate("DataCriacao"));
 				co.setTipoConta(rs.getString("tipoConta"));
-				co.setAtividade(rs.getBoolean("atividade"));
+				co.setAtividade(rs.getInt("atividade"));
 				lista.add(co);
 			}
 			String result = "[";
@@ -72,7 +72,7 @@ public class ContaServerResource extends ServerResource {
 		Date date = (Date) req.getAttributes().get("data");
 		try {
 			c = ConnectionProvider.getConnection();
-			PreparedStatement ps = c.prepareStatement("INSERT INTO CONTA VALUES (?, ?, ?, ?, ?, ?, true);");
+			PreparedStatement ps = c.prepareStatement("INSERT INTO CONTA VALUES (?, ?, ?, ?, ?, ?, 1);");
 			ps.setInt(1, contador++);
 			ps.setString(2, nome);
 			ps.setDate(3, date);

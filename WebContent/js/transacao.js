@@ -4,10 +4,11 @@ $(document).ready(function () {
 				{
 			origem: $("#cntOrigem").val(),
 			destino: $("#cntDestino").val(),
-			quantia: $("#quantia").val()
+			quantia: $("#quantia").val(),
+			aporte: $("#aporte").val()
 				},
 				function (data, status) {
-					$("#messages").html(data + " " + status);
+					$("#messages").html(data + "<br>" + status);
 				})
 	});
 	
@@ -16,10 +17,11 @@ $(document).ready(function () {
 				{
 			origem: $("#cntOrigem").val(),
 			destino: $("#cntDestino").val(),
-			quantia: $("#quantia").val()
+			quantia: $("#quantia").val(),
+			aporte: $("#aporte").val()
 				},
 				function (data, status) {
-					
+					$("#messages").html(data + "<br>" + status);
 				})
 	});
 	
@@ -34,7 +36,7 @@ $(document).ready(function () {
 			quantiaNova: $("#quantiaNova").val()
 				},
 				function (data, status) {
-					
+					$("#messages").html(data + "<br>" + status);
 				})
 	});
 	

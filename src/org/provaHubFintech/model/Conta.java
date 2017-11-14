@@ -9,7 +9,7 @@ public class Conta {
 	String cnpj;
 	String cpf;
 	String tipoConta;
-	boolean atividade;
+	int atividade;
 	
 	public String toString() {
 		return idConta + "," + nome + "," + dataCriacao + "," + cnpj + "," + cpf + "," + tipoConta;
@@ -50,10 +50,10 @@ public class Conta {
 	public void setTipoConta(String tipoConta) {
 		this.tipoConta = tipoConta;
 	}
-	public boolean isAtividade() {
+	public int getAtividade() {
 		return atividade;
 	}
-	public void setAtividade(boolean atividade) {
+	public void setAtividade(int atividade) {
 		this.atividade = atividade;
 	}
 }

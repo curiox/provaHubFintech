@@ -29,7 +29,7 @@ $(document).ready(function () {
 			data: today
 		},
 		function (data, status) {
-			
+			$("#messages").html(status + "<br>" + data);
 		});
 	});
 	
@@ -45,7 +45,7 @@ $(document).ready(function () {
 			data: today
 				},
 				function (data, status) {
-					
+					$("#messages").html(status + "<br>" + data);
 				})
 	});
 	
@@ -65,7 +65,7 @@ $(document).ready(function () {
 			data: today
 				},
 				function (data, status) {
-					
+					$("#messages").html(status + "<br>" + data);
 				})
 	});
 	

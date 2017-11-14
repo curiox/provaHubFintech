@@ -19,7 +19,7 @@ $(document).ready(function () {
 			dataNasc: $("#dataNasc").val()
 				},
 				function (data, status) {
-					
+					$("#messages").html(status + "<br>" + data);
 				})
 	});
 
@@ -34,7 +34,7 @@ $(document).ready(function () {
 			dataNascNovo: $("#dataNascNovo").val()
 				},
 				function (data, status) {
-					
+					$("#messages").html(status + "<br>" + data);
 				})
 	});
 
