@@ -16,7 +16,7 @@ $(document).ready(function () {
 	});
 	
 	$("#updateTransacao").click(function () {
-		$.put("http://localhost:8080/database/transferencia/update",
+		$.post("http://localhost:8080/database/transferencia/update",
 				$("form").serialize(),
 				function (data, status) {
 					$("#messages").html(data + "<br>" + status);

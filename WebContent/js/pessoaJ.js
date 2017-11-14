@@ -8,7 +8,7 @@ $(document).ready(function () {
 	});
 	
 	$("#removePessoaJ").click(function() {
-		$.delete("http://localhost:8080/database/pessoajuridica/delete",
+		$.post("http://localhost:8080/database/pessoajuridica/delete",
 				$("form").serialize(),
 				function (data, status) {
 					$("#messages").html(status + "<br>" + data);
@@ -16,7 +16,7 @@ $(document).ready(function () {
 	});
 	
 	$("#updatePessoaJ").click(function () {
-		$.put("http://localhost:8080/database/pessoajuridica/update",
+		$.post("http://localhost:8080/database/pessoajuridica/update",
 				$("form").serialize,
 				function (data, status) {
 					$("#messages").html(status + "<br>" + data);
