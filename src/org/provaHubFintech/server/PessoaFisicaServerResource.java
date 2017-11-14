@@ -69,7 +69,7 @@ public class PessoaFisicaServerResource extends ServerResource {
 			ps.setDate(3, dataNasc);
 			int rowsAffected = ps.executeUpdate();
 			Response res = getResponse();
-			res.getAttributes().putIfAbsent("rowsAffected", rowsAffected);
+			res.setEntity(rowsAffected + " linha(s) afetada(s)", MediaType.TEXT_PLAIN);
 			res.setStatus(Status.SUCCESS_ACCEPTED);
 			return res;
 		} catch (SQLException e) {
@@ -95,7 +95,7 @@ public class PessoaFisicaServerResource extends ServerResource {
 			ps.setDate(3, dataNasc);
 			int rowsAffected = ps.executeUpdate();
 			Response res = getResponse();
-			res.getAttributes().putIfAbsent("rowsAffected", rowsAffected);
+			res.setEntity(rowsAffected + " linha(s) afetada(s)", MediaType.TEXT_PLAIN);
 			res.setStatus(Status.SUCCESS_ACCEPTED);
 			return res;
 		} catch (SQLException e) {
@@ -130,7 +130,7 @@ public class PessoaFisicaServerResource extends ServerResource {
 			ps.setDate(6, dataNasc);
 			int rowsAffected = ps.executeUpdate();
 			Response res = getResponse();
-			res.getAttributes().putIfAbsent("rowsAffected", rowsAffected);
+			res.setEntity(rowsAffected + " linha(s) afetada(s)", MediaType.TEXT_PLAIN);
 			res.setStatus(Status.SUCCESS_ACCEPTED);
 			return res;
 		} catch (SQLException e) {
@@ -140,5 +140,4 @@ public class PessoaFisicaServerResource extends ServerResource {
 			return res;
 		}
 	}
-
 }

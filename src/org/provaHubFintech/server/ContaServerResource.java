@@ -42,6 +42,7 @@ public class ContaServerResource extends ServerResource {
 				co.setCpf(rs.getString("CPF"));
 				co.setDataCriacao(rs.getDate("DataCriacao"));
 				co.setTipoConta(rs.getString("tipoConta"));
+				co.setAtividade(rs.getBoolean("atividade"));
 				lista.add(co);
 			}
 			String result = "[";
@@ -71,7 +72,7 @@ public class ContaServerResource extends ServerResource {
 		Date date = (Date) req.getAttributes().get("data");
 		try {
 			c = ConnectionProvider.getConnection();
-			PreparedStatement ps = c.prepareStatement("INSERT INTO CONTA VALUES (?, ?, ?, ?, ?, ?);");
+			PreparedStatement ps = c.prepareStatement("INSERT INTO CONTA VALUES (?, ?, ?, ?, ?, ?, true);");
 			ps.setInt(1, contador++);
 			ps.setString(2, nome);
 			ps.setDate(3, date);
@@ -113,7 +114,7 @@ public class ContaServerResource extends ServerResource {
 			ps.setString(5, tipoConta);
 			int rowsAffected = ps.executeUpdate();
 			Response res = getResponse();
-			res.getAttributes().putIfAbsent("rowsAffected", rowsAffected);
+			res.setEntity(rowsAffected + " linha(s) afetada(s)", MediaType.TEXT_PLAIN);
 			res.setStatus(Status.SUCCESS_ACCEPTED);
 			return res;
 		} catch (SQLException e) {
@@ -156,7 +157,7 @@ public class ContaServerResource extends ServerResource {
 			ps.setString(9, tipoConta);
 			int rowsAffected = ps.executeUpdate();
 			Response res = getResponse();
-			res.getAttributes().putIfAbsent("rowsAffected", rowsAffected);
+			res.setEntity(rowsAffected + " linha(s) afetada(s)", MediaType.TEXT_PLAIN);
 			res.setStatus(Status.SUCCESS_ACCEPTED);
 			return res;
 		} catch (SQLException e) {
@@ -166,5 +167,4 @@ public class ContaServerResource extends ServerResource {
 			return res;
 		}
 	}
-	
 }

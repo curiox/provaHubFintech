@@ -68,7 +68,7 @@ public class TransferenciaServerResource extends ServerResource {
 			ps.setFloat(3, quantia);
 			int rowsAffected = ps.executeUpdate();
 			Response res = getResponse();
-			res.getAttributes().putIfAbsent("rowsAffected", rowsAffected);
+			res.setEntity(rowsAffected+" linha(s) afetada(s)", MediaType.TEXT_PLAIN);
 			res.setStatus(Status.SUCCESS_ACCEPTED);
 			return res;
 		} catch (SQLException e) {
@@ -94,7 +94,7 @@ public class TransferenciaServerResource extends ServerResource {
 			ps.setFloat(3, quantia);
 			int rowsAffected = ps.executeUpdate();
 			Response res = getResponse();
-			res.getAttributes().putIfAbsent("rowsAffected", rowsAffected);
+			res.setEntity(rowsAffected+" linha(s) afetada(s)", MediaType.TEXT_PLAIN);
 			res.setStatus(Status.SUCCESS_ACCEPTED);
 			return res;
 		} catch (SQLException e) {
@@ -129,7 +129,7 @@ public class TransferenciaServerResource extends ServerResource {
 			ps.setFloat(6, quantia);
 			int rowsAffected = ps.executeUpdate();
 			Response res = getResponse();
-			res.getAttributes().putIfAbsent("rowsAffected", rowsAffected);
+			res.setEntity(rowsAffected+" linha(s) afetada(s)", MediaType.TEXT_PLAIN);
 			res.setStatus(Status.SUCCESS_ACCEPTED);
 			return res;
 		} catch (SQLException e) {
@@ -139,5 +139,4 @@ public class TransferenciaServerResource extends ServerResource {
 			return res;
 		}
 	}
-	
 }
