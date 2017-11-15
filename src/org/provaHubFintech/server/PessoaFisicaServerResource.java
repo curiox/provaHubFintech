@@ -38,14 +38,14 @@ public class PessoaFisicaServerResource extends ServerResource {
 				pf.setNomeCompleto(rs.getString("nomeCompleto"));
 				lista.add(pf);
 			}
-			String result = "[";
+			String result = "[<br>";
 			for(PessoaFisica p : lista) {
 				result += p.toString();
 				if(lista.size() > 1 && lista.indexOf(p) < lista.size()-1) {
-					result += " | ";
+					result += "<br>";
 				}
 			}
-			result += "]";
+			result += "<br>]";
 			res.setEntity(result, MediaType.TEXT_PLAIN);
 			res.setStatus(Status.SUCCESS_ACCEPTED);
 			return res;

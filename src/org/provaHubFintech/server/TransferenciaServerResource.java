@@ -38,14 +38,14 @@ public class TransferenciaServerResource extends ServerResource {
 				trans.setCodAporte(rs.getString("codAporte"));
 				lista.add(trans);
 			}
-			String result = "[";
+			String result = "[<br>";
 			for (Transferencia t : lista) {
 				result += t.toString();
 				if(lista.size() > 1 && lista.indexOf(t) < lista.size()-1) {
-					result += " | ";
+					result += "<br>";
 				}
 			}
-			result += "]";
+			result += "<br>]";
 			res.setEntity(result, MediaType.TEXT_PLAIN);
 			res.setStatus(Status.SUCCESS_ACCEPTED);
 			return res;

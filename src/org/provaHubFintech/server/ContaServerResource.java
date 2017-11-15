@@ -45,14 +45,14 @@ public class ContaServerResource extends ServerResource {
 				co.setAtividade(rs.getInt("atividade"));
 				lista.add(co);
 			}
-			String result = "[";
+			String result = "[<br>";
 			for(Conta conta : lista) {
 				result += conta.toString();
 				if(lista.size() > 1 && lista.indexOf(conta) < lista.size()-1) {
-					result += " | ";
+					result += "<br>";
 				}
 			}
-			result += "]";
+			result += "<br>]";
 			res.setEntity(result, MediaType.TEXT_PLAIN);
 			res.setStatus(Status.SUCCESS_ACCEPTED);
 			return res;

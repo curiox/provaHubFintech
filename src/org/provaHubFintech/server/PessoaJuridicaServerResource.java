@@ -37,14 +37,14 @@ public class PessoaJuridicaServerResource extends ServerResource {
 				pj.setNomeFantasia(rs.getString("NomeFantasia"));
 				lista.add(pj);
 			}
-			String result = "[";
+			String result = "[<br>";
 			for(PessoaJuridica p : lista) {
 				result += p.toString();
 				if(lista.size() > 1 && lista.indexOf(p) < lista.size()-1) {
-					result += " | ";
+					result += "<br>";
 				}
 			}
-			result += "]";
+			result += "<br>]";
 			res.setEntity(result, MediaType.TEXT_PLAIN);
 			res.setStatus(Status.SUCCESS_ACCEPTED);
 			return res;

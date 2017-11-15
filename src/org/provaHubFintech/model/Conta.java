@@ -12,7 +12,7 @@ public class Conta {
 	int atividade;
 	
 	public String toString() {
-		return idConta + "," + nome + "," + dataCriacao + "," + cnpj + "," + cpf + "," + tipoConta;
+		return idConta + "," + nome + "," + dataCriacao + "," + cnpj + "," + cpf + "," + tipoConta + "," + atividade;
 	}
 	public int getIdConta() {
 		return idConta;
