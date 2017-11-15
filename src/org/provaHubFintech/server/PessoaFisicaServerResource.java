@@ -10,11 +10,12 @@ import java.util.ArrayList;
 
 import org.provaHubFintech.controller.ConnectionProvider;
 import org.provaHubFintech.model.PessoaFisica;
-import org.restlet.Request;
 import org.restlet.Response;
 import org.restlet.data.Form;
 import org.restlet.data.MediaType;
+import org.restlet.data.Parameter;
 import org.restlet.data.Status;
+import org.restlet.representation.Representation;
 import org.restlet.resource.Get;
 import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
@@ -40,6 +41,9 @@ public class PessoaFisicaServerResource extends ServerResource {
 			String result = "[";
 			for(PessoaFisica p : lista) {
 				result += p.toString();
+				if(lista.size() > 1 && lista.indexOf(p) < lista.size()-1) {
+					result += " | ";
+				}
 			}
 			result += "]";
 			res.setEntity(result, MediaType.TEXT_PLAIN);
@@ -54,14 +58,24 @@ public class PessoaFisicaServerResource extends ServerResource {
 	}
 	
 	@Post
-	public Response adiciona() {
+	public Response adiciona(Representation representation) {
 		Connection c = null;
 		try {
 			c = ConnectionProvider.getConnection();
-			Request req = getRequest();
-			String cpf = (String) req.getAttributes().get("cpf"),
-					nomeComp = (String) req.getAttributes().get("nomeComp");
-			Date dataNasc = (Date) req.getAttributes().get("dataNasc");
+			Form form = new Form(getRequest().getEntity());
+			String cpf = "", nomeComp = "";
+			Date dataNasc = new Date(0);
+			for (Parameter p : form) {
+				if(p.getName().equals("cpf")) {
+					cpf = p.getValue();
+				}
+				if(p.getName().equals("nomeComp")) {
+					nomeComp = p.getValue();
+				}
+				if(p.getName().equals("dataNasc")) {
+					dataNasc = Date.valueOf(p.getValue());
+				} else { continue; }
+			}
 			PreparedStatement ps = c.prepareStatement("INSERT INTO PESSOA_FISICA VALUES (?, ?, ?);");
 			ps.setString(1, cpf);
 			ps.setString(2, nomeComp);

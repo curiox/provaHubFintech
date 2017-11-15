@@ -8,7 +8,9 @@ import java.sql.SQLException;
 import org.provaHubFintech.controller.ConnectionProvider;
 import org.restlet.Request;
 import org.restlet.Response;
+import org.restlet.data.Form;
 import org.restlet.data.MediaType;
+import org.restlet.data.Parameter;
 import org.restlet.data.Status;
 import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
@@ -21,12 +23,21 @@ public class PessoaFisicaUpdateServerResource extends ServerResource {
 		try {
 			c = ConnectionProvider.getConnection();
 			Request req = getRequest();
-			String cpf = (String) req.getAttributes().get("cpf"),
-					cpfNovo = (String) req.getAttributes().get("cpfNovo"),
-					nomeComp = (String) req.getAttributes().get("nomeComp"),
-					nomeCompNovo = (String) req.getAttributes().get("nomeCompNovo");
-			Date dataNasc = (Date) req.getAttributes().get("dataNasc"),
-					dataNascNovo = (Date) req.getAttributes().get("dataNascNovo");
+			Form form = new Form(req.getEntity());
+			String cpf = "",
+					cpfNovo = "",
+					nomeComp = "",
+					nomeCompNovo = "";
+			Date dataNasc = new Date(0),
+					dataNascNovo = new Date(0);
+			for(Parameter p : form) {
+				if(p.getName().equals("cpf")) cpf = p.getValue();
+				if(p.getName().equals("cpfNovo")) cpfNovo = p.getValue();
+				if(p.getName().equals("nomeComp")) nomeComp = p.getValue();
+				if(p.getName().equals("nomeCompNovo")) nomeCompNovo = p.getValue();
+				if(p.getName().equals("dataNasc")) dataNasc = Date.valueOf(p.getValue());
+				if(p.getName().equals("dataNascNovo")) dataNascNovo = Date.valueOf(p.getValue());
+			}
 			PreparedStatement ps =
 					c.prepareStatement("UPDATE PESSOA_FISICA"
 							+ " SET cpf = ? AND nomeCompleto = ? AND dataNasc = ?"
