@@ -7,7 +7,7 @@ public class Transferencia {
 	String codAporte;
 	
 	public String toString() {
-		return idContaOrigem + ";" + idContaDestino + ";" + quantia;
+		return idContaOrigem + ";" + idContaDestino + ";" + quantia + ";" + codAporte;
 	}
 	public int getIdContaOrigem() {
 		return idContaOrigem;
