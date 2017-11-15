@@ -59,7 +59,7 @@ public class PessoaFisicaServerResource extends ServerResource {
 	}
 	
 	@Post
-	public Response adiciona(Representation representation) throws IOException {
+	public Response adiciona(Representation representation) {
 		Connection c = null;
 		try {
 			c = ConnectionProvider.getConnection();
