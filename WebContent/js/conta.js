@@ -1,7 +1,7 @@
 $(document).ready(function () {
 	$("#addConta").click(function() {
 		$.post("http://localhost:8080/database/conta",
-				$("#account-form").serialize(),
+				$("form").serialize(),
 				function (data, status) {
 					$("#messages").html(status + "<br>" + data);
 				});
@@ -9,7 +9,7 @@ $(document).ready(function () {
 	
 	$("#removeConta").click(function() {
 		$.post("http://localhost:8080/database/conta/delete",
-				$("#account-form").serialize(),
+				$("form").serialize(),
 				function (data, status) {
 					$("#messages").html(status + "<br>" + data);
 				})
@@ -17,7 +17,7 @@ $(document).ready(function () {
 	
 	$("#updateConta").click(function () {
 		$.post("http://localhost:8080/database/conta/update",
-				$("#account-form").serialize(),
+				$("form").serialize(),
 				function (data, status) {
 					$("#messages").html(status + "<br>" + data);
 				})
