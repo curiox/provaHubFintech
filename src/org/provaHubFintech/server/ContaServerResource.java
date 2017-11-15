@@ -14,11 +14,12 @@ import java.sql.ResultSet;
 
 import org.provaHubFintech.controller.ConnectionProvider;
 import org.provaHubFintech.model.Conta;
-import org.restlet.Request;
 import org.restlet.Response;
 import org.restlet.data.Form;
 import org.restlet.data.MediaType;
+import org.restlet.data.Parameter;
 import org.restlet.data.Status;
+import org.restlet.representation.Representation;
 
 public class ContaServerResource extends ServerResource {
 	
@@ -47,6 +48,9 @@ public class ContaServerResource extends ServerResource {
 			String result = "[";
 			for(Conta conta : lista) {
 				result += conta.toString();
+				if(lista.size() > 1 && lista.indexOf(conta) < lista.size()-1) {
+					result += " | ";
+				}
 			}
 			result += "]";
 			res.setEntity(result, MediaType.TEXT_PLAIN);
@@ -61,16 +65,21 @@ public class ContaServerResource extends ServerResource {
 	}
 	
 	@Post
-	public Response adiciona() {
+	public Response adiciona(Representation representation) {
 		Connection c = null;
 		try {
 			c = ConnectionProvider.getConnection();
-			Request req = getRequest();
-			String nome = (String) req.getAttributes().get("nome"),
-					cnpj = (String) req.getAttributes().get("cnpj"),
-					cpf = (String) req.getAttributes().get("cpf"),
-					tipoConta = (String) req.getAttributes().get("tipoconta");
-			Date date = (Date) req.getAttributes().get("data");
+			Form form = new Form(getRequest().getEntity());
+			String nome = "", cnpj = "", cpf = "", tipoConta = "";
+			Date date = new Date(0);
+			for (Parameter p : form) {
+				if(p.getName().equals("nome")) nome = p.getValue();
+				if(p.getName().equals("cnpj")) cnpj = p.getValue().length() > 0 ? p.getValue() : null;
+				if(p.getName().equals("cpf")) cpf = p.getValue().length() > 0 ? p.getValue(): null;
+				if(p.getName().equals("tipoconta")) tipoConta = p.getValue();
+				if(p.getName().equals("date")) date = Date.valueOf(p.getValue());
+				else continue;
+			}
 			PreparedStatement ps = c.prepareStatement("INSERT INTO CONTA VALUES (?, ?, ?, ?, ?, ?, 1);");
 			ps.setInt(1, contador++);
 			ps.setString(2, nome);
