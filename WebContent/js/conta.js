@@ -1,34 +1,13 @@
 $(document).ready(function () {
-	
-	getDate = function () {
-		var today = new Date();
-		var dd = today.getDate();
-		var mm = today.getMonth()+1; //January is 0!
-		var yyyy = today.getFullYear();
-	
-		if(dd<10) {
-		    dd = '0'+dd
-		} 
-	
-		if(mm<10) {
-		    mm = '0'+mm
-		} 
-	
-		return today = dd + '/' + mm + '/' + yyyy;
-	}
-	
 	$("#addConta").click(function() {
-		var today = getDate();
-		
 		$.post("http://localhost:8080/database/conta",
-		$("#account-form").serialize(),
-		function (data, status) {
-			$("#messages").html(status + "<br>" + data);
-		});
+				$("#account-form").serialize(),
+				function (data, status) {
+					$("#messages").html(status + "<br>" + data);
+				});
 	});
 	
 	$("#removeConta").click(function() {
-		
 		$.post("http://localhost:8080/database/conta/delete",
 				$("#account-form").serialize(),
 				function (data, status) {
@@ -37,8 +16,6 @@ $(document).ready(function () {
 	});
 	
 	$("#updateConta").click(function () {
-		var today = getDate();
-		
 		$.post("http://localhost:8080/database/conta/update",
 				$("#account-form").serialize(),
 				function (data, status) {
