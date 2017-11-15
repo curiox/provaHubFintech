@@ -9,10 +9,12 @@ import java.util.ArrayList;
 
 import org.provaHubFintech.controller.ConnectionProvider;
 import org.provaHubFintech.model.PessoaJuridica;
-import org.restlet.Request;
 import org.restlet.Response;
+import org.restlet.data.Form;
 import org.restlet.data.MediaType;
+import org.restlet.data.Parameter;
 import org.restlet.data.Status;
+import org.restlet.representation.Representation;
 import org.restlet.resource.Get;
 import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
@@ -38,6 +40,9 @@ public class PessoaJuridicaServerResource extends ServerResource {
 			String result = "[";
 			for(PessoaJuridica p : lista) {
 				result += p.toString();
+				if(lista.size() > 1 && lista.indexOf(p) < lista.size()-1) {
+					result += " | ";
+				}
 			}
 			result += "]";
 			res.setEntity(result, MediaType.TEXT_PLAIN);
@@ -52,14 +57,20 @@ public class PessoaJuridicaServerResource extends ServerResource {
 	}
 	
 	@Post
-	public Response adiciona() {
+	public Response adiciona(Representation rep) {
 		Connection c = null;
 		try {
 			c = ConnectionProvider.getConnection();
-			Request req = getRequest();
-			String cnpj = (String) req.getAttributes().get("cnpj"),
-					razSoc = (String) req.getAttributes().get("razSoc"),
-					nomFan = (String) req.getAttributes().get("nomFan");
+			Form form = new Form(getRequest().getEntity());
+			String cnpj = "",
+					razSoc = "",
+					nomFan = "";
+			for(Parameter p : form) {
+				if(p.getName().equals("cnpj")) cnpj = p.getValue();
+				if(p.getName().equals("razsoc")) razSoc = p.getValue();
+				if(p.getName().equals("nomfan")) nomFan = p.getValue();
+				else continue;
+			}
 			PreparedStatement ps = c.prepareStatement("INSERT INTO PESSOA_JURIDICA VALUES (?, ?, ?);");
 			ps.setString(1, cnpj);
 			ps.setString(2, razSoc);
