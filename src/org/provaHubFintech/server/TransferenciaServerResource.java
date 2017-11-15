@@ -9,9 +9,10 @@ import java.util.ArrayList;
 
 import org.provaHubFintech.controller.ConnectionProvider;
 import org.provaHubFintech.model.Transferencia;
-import org.restlet.Request;
 import org.restlet.Response;
+import org.restlet.data.Form;
 import org.restlet.data.MediaType;
+import org.restlet.data.Parameter;
 import org.restlet.data.Status;
 import org.restlet.resource.Get;
 import org.restlet.resource.Post;
@@ -39,6 +40,9 @@ public class TransferenciaServerResource extends ServerResource {
 			String result = "[";
 			for (Transferencia t : lista) {
 				result += t.toString();
+				if(lista.size() > 1 && lista.indexOf(t) < lista.size()-1) {
+					result += " | ";
+				}
 			}
 			result += "]";
 			res.setEntity(result, MediaType.TEXT_PLAIN);
@@ -57,11 +61,18 @@ public class TransferenciaServerResource extends ServerResource {
 		Connection c = null;
 		try {
 			c = ConnectionProvider.getConnection();
-			Request req = getRequest();
-			int cntOrigem = (int) req.getAttributes().get("origem"),
-					cntDestino = (int) req.getAttributes().get("destino");
-			float quantia = (float) req.getAttributes().get("quantia");
-			String aporte = (String) req.getAttributes().get("aporte");
+			Form form = new Form(getRequest().getEntity());
+			int cntOrigem = 0,
+					cntDestino = 0;
+			float quantia = 0;
+			String aporte = null;
+			for(Parameter p : form) {
+				if(p.getName().equals("cntOrigem")) cntOrigem = Integer.parseInt(p.getValue());
+				if(p.getName().equals("cntDestino")) cntDestino = Integer.parseInt(p.getValue());
+				if(p.getName().equals("quantia")) quantia = Float.parseFloat(p.getValue());
+				if(p.getName().equals("aporte")) aporte = p.getValue() == "" ? null : p.getValue();
+				else continue;
+			}
 			PreparedStatement ps = c.prepareStatement("INSERT INTO TRANSFERENCIA VALUES (?, ?, ?, ?);");
 			ps.setInt(1, cntOrigem);
 			ps.setInt(2, cntDestino);
