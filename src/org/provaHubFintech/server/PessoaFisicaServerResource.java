@@ -1,5 +1,6 @@
 package org.provaHubFintech.server;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -58,7 +59,7 @@ public class PessoaFisicaServerResource extends ServerResource {
 	}
 	
 	@Post
-	public Response adiciona(Representation representation) {
+	public Response adiciona(Representation representation) throws IOException {
 		Connection c = null;
 		try {
 			c = ConnectionProvider.getConnection();
@@ -66,15 +67,10 @@ public class PessoaFisicaServerResource extends ServerResource {
 			String cpf = "", nomeComp = "";
 			Date dataNasc = new Date(0);
 			for (Parameter p : form) {
-				if(p.getName().equals("cpf")) {
-					cpf = p.getValue();
-				}
-				if(p.getName().equals("nomeComp")) {
-					nomeComp = p.getValue();
-				}
-				if(p.getName().equals("dataNasc")) {
-					dataNasc = Date.valueOf(p.getValue());
-				} else { continue; }
+				if(p.getName().equals("cpf")) cpf = p.getValue();
+				if(p.getName().equals("nomeComp")) nomeComp = p.getValue();
+				if(p.getName().equals("dataNasc")) dataNasc = Date.valueOf(p.getValue());
+				else continue;
 			}
 			PreparedStatement ps = c.prepareStatement("INSERT INTO PESSOA_FISICA VALUES (?, ?, ?);");
 			ps.setString(1, cpf);

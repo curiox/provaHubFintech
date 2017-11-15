@@ -6,24 +6,23 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import org.provaHubFintech.controller.ConnectionProvider;
-import org.restlet.Request;
 import org.restlet.Response;
 import org.restlet.data.Form;
 import org.restlet.data.MediaType;
 import org.restlet.data.Parameter;
 import org.restlet.data.Status;
+import org.restlet.representation.Representation;
 import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
 
 public class PessoaFisicaUpdateServerResource extends ServerResource {
 	
 	@Post
-	public Response atualiza() {
+	public Response atualiza(Representation representation) {
 		Connection c = null;
 		try {
 			c = ConnectionProvider.getConnection();
-			Request req = getRequest();
-			Form form = new Form(req.getEntity());
+			Form form = new Form(getRequest().getEntity());
 			String cpf = "",
 					cpfNovo = "",
 					nomeComp = "",

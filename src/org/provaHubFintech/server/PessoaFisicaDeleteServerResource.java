@@ -12,13 +12,14 @@ import org.restlet.data.Form;
 import org.restlet.data.MediaType;
 import org.restlet.data.Parameter;
 import org.restlet.data.Status;
+import org.restlet.representation.Representation;
 import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
 
 public class PessoaFisicaDeleteServerResource extends ServerResource {
 	
 	@Post
-	public Response remove() {
+	public Response remove(Representation representation) {
 		Connection c = null;
 		try {
 			c = ConnectionProvider.getConnection();
