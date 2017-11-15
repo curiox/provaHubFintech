@@ -39,7 +39,7 @@ public class WebBrowser extends JFrame {
 		
 		this.add(mainPanel);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setSize(700, 600);
+		this.setSize(700, 400);
 	}
 	
 	public void loadJavaFXScene() {
