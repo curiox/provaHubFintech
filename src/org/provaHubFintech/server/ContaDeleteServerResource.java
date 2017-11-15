@@ -6,35 +6,64 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import org.provaHubFintech.controller.ConnectionProvider;
-import org.restlet.Request;
 import org.restlet.Response;
+import org.restlet.data.Form;
 import org.restlet.data.MediaType;
+import org.restlet.data.Parameter;
 import org.restlet.data.Status;
+import org.restlet.representation.Representation;
 import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
 
 public class ContaDeleteServerResource extends ServerResource {
 
 	@Post
-	public Response remove() {
+	public Response remove(Representation representation) {
 		Connection c = null;
 		try {
 			c = ConnectionProvider.getConnection();
-			Request req = getRequest();
-			String cpf = (String) req.getAttributes().get("cpf"),
-					cnpj = (String) req.getAttributes().get("cnpj"),
-					nome =  (String) req.getAttributes().get("nome"),
-					tipoConta = (String) req.getAttributes().get("tipoConta");
-			Date dataNasc = (Date) req.getAttributes().get("data");
-			PreparedStatement ps =
+			Form form = new Form(getRequest().getEntity());
+			String cpf = "",
+					cnpj = "",
+					nome =  "",
+					tipoConta = "";
+			Date data = null;
+			for(Parameter p : form) {
+				if(p.getName().equals("cpf")) cpf = p.getValue();
+				if(p.getName().equals("cnpj")) cnpj = p.getValue();
+				if(p.getName().equals("nome")) nome = p.getValue();
+				if(p.getName().equals("tipoConta")) tipoConta = p.getValue();
+				if(p.getName().equals("date")) data = Date.valueOf(p.getValue());
+				else continue;
+			}
+			PreparedStatement ps;
+			if(cpf.equals("")) {
+				ps = c.prepareStatement("DELETE FROM CONTA "
+						+ "WHERE cpf IS NULL AND cnpj = ? AND DataCriacao = ? "
+						+ "AND nome = ? AND tipoConta = ?;");
+				ps.setString(1, cnpj);
+				ps.setDate(2, data);
+				ps.setString(3, nome);
+				ps.setString(4, tipoConta);
+			} else if (cnpj.equals("")) {
+				ps = c.prepareStatement("DELETE FROM CONTA "
+						+ "WHERE cnpj IS NULL and cpf = ? AND DataCriacao = ? "
+						+ "AND nome = ? AND tipoConta = ?;");
+				ps.setString(1, cpf);
+				ps.setDate(2, data);
+				ps.setString(3, nome);
+				ps.setString(4, tipoConta);
+			} else {
+			ps =
 					c.prepareStatement("DELETE FROM CONTA"
 							+ "WHERE cpf = ? AND cnpj = ? AND DataCriacao = ?"
 							+ "AND nome = ? AND tipoConta = ?;");
 			ps.setString(1, cpf);
 			ps.setString(2, cnpj);
-			ps.setDate(3, dataNasc);
+			ps.setDate(3, data);
 			ps.setString(4, nome);
 			ps.setString(5, tipoConta);
+			}
 			int rowsAffected = ps.executeUpdate();
 			Response res = getResponse();
 			res.setEntity(rowsAffected + " linha(s) afetada(s)", MediaType.TEXT_PLAIN);
