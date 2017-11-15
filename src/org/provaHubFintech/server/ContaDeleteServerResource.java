@@ -32,7 +32,7 @@ public class ContaDeleteServerResource extends ServerResource {
 				if(p.getName().equals("cpf")) cpf = p.getValue();
 				if(p.getName().equals("cnpj")) cnpj = p.getValue();
 				if(p.getName().equals("nome")) nome = p.getValue();
-				if(p.getName().equals("tipoConta")) tipoConta = p.getValue();
+				if(p.getName().equals("tipoconta")) tipoConta = p.getValue();
 				if(p.getName().equals("date")) data = Date.valueOf(p.getValue());
 				else continue;
 			}
