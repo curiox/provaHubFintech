@@ -23,6 +23,7 @@ public class ContaUpdateServerResource extends ServerResource {
 		try {
 			c = ConnectionProvider.getConnection();
 			Form form = new Form(getRequest().getEntity());
+			int idconta = 0;
 			String nome = "",
 					nomeNovo = "",
 					cnpj = "",
@@ -34,6 +35,7 @@ public class ContaUpdateServerResource extends ServerResource {
 			Date data = new Date(0), dataNova = new Date(0);
 			PreparedStatement ps;
 			for(Parameter p : form) {
+				if(p.getName().equals("idconta")) idconta = Integer.parseInt(p.getValue());
 				if(p.getName().equals("nome")) nome = p.getValue();
 				if(p.getName().equals("nomenovo")) nomeNovo = p.getValue();
 				if(p.getName().equals("cnpj")) cnpj = p.getValue();
@@ -47,7 +49,8 @@ public class ContaUpdateServerResource extends ServerResource {
 			}
 			if(cnpj.equals("")) {
 				ps = c.prepareStatement("UPDATE CONTA SET nome = ? AND DataCriacao = ? AND CPF = ? AND TipoConta = ? "
-						+ "WHERE nome = ? AND DataCriacao = ? AND CPF = ? AND TipoConta = ? AND CNPJ IS NULL;");
+						+ "WHERE nome = ? AND DataCriacao = ? AND CPF = ? AND TipoConta = ? AND CNPJ IS NULL "
+						+ "AND idConta = ?;");
 				ps.setString(1, nomeNovo);
 				ps.setDate(2, dataNova);
 				ps.setString(3, cpfNovo);
@@ -56,10 +59,12 @@ public class ContaUpdateServerResource extends ServerResource {
 				ps.setDate(6, data);
 				ps.setString(7, cpf);
 				ps.setString(8, tipoConta);
+				ps.setInt(9, idconta);
 			}
 			else if(cpf.equals("")) {
 				ps = c.prepareStatement("UPDATE CONTA SET nome = ? AND DataCriacao = ? AND CNPJ = ? AND TipoConta = ? "
-						+ "WHERE nome = ? AND DataCriacao = ? AND CNPJ = ? AND TipoConta = ? AND CPF IS NULL;");
+						+ "WHERE nome = ? AND DataCriacao = ? AND CNPJ = ? AND TipoConta = ? AND CPF IS NULL"
+						+ " AND idconta = ?;");
 				ps.setString(1, nomeNovo);
 				ps.setDate(2, dataNova);
 				ps.setString(3, cnpjNovo);
@@ -68,12 +73,13 @@ public class ContaUpdateServerResource extends ServerResource {
 				ps.setDate(6, data);
 				ps.setString(7, cnpj);
 				ps.setString(8, tipoConta);
+				ps.setInt(9, idconta);
 			} else {
 				ps = c.prepareStatement("UPDATE CONTA"
 						+ " SET nome = ? AND DataCriacao = ? AND CNPJ = ?"
 						+ " AND CPF = ? AND TipoConta = ?"
 						+ " WHERE nome = ? AND DataCriacao = ? AND CNPJ = ?"
-						+ " AND CPF = ? AND TipoConta = ?");
+						+ " AND CPF = ? AND TipoConta = ? AND idconta = ?;");
 				ps.setString(1, nomeNovo);
 				ps.setDate(2, dataNova);
 				ps.setString(3, cnpjNovo);
@@ -84,6 +90,7 @@ public class ContaUpdateServerResource extends ServerResource {
 				ps.setString(8, cnpj);
 				ps.setString(9, cpf);
 				ps.setString(10, tipoConta);
+				ps.setInt(11, idconta);
 			}
 			int rowsAffected = ps.executeUpdate();
 			Response res = getResponse();

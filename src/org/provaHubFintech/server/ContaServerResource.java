@@ -22,8 +22,6 @@ import org.restlet.data.Status;
 import org.restlet.representation.Representation;
 
 public class ContaServerResource extends ServerResource {
-	
-	private static int contador = 1;
 
 	@Get
 	public Response consulta() {
@@ -70,9 +68,11 @@ public class ContaServerResource extends ServerResource {
 		try {
 			c = ConnectionProvider.getConnection();
 			Form form = new Form(getRequest().getEntity());
+			int idconta = 0;
 			String nome = "", cnpj = "", cpf = "", tipoConta = "";
 			Date date = new Date(0);
 			for (Parameter p : form) {
+				if(p.getName().equals("idconta")) idconta = Integer.parseInt(p.getValue());
 				if(p.getName().equals("nome")) nome = p.getValue();
 				if(p.getName().equals("cnpj")) cnpj = p.getValue().length() > 0 ? p.getValue() : null;
 				if(p.getName().equals("cpf")) cpf = p.getValue().length() > 0 ? p.getValue(): null;
@@ -81,7 +81,7 @@ public class ContaServerResource extends ServerResource {
 				else continue;
 			}
 			PreparedStatement ps = c.prepareStatement("INSERT INTO CONTA VALUES (?, ?, ?, ?, ?, ?, 1);");
-			ps.setInt(1, contador++);
+			ps.setInt(1, idconta);
 			ps.setString(2, nome);
 			ps.setDate(3, date);
 			ps.setString(4, cnpj);

@@ -23,12 +23,14 @@ public class ContaDeleteServerResource extends ServerResource {
 		try {
 			c = ConnectionProvider.getConnection();
 			Form form = new Form(getRequest().getEntity());
+			int idconta = 0;
 			String cpf = "",
 					cnpj = "",
 					nome =  "",
 					tipoConta = "";
 			Date data = null;
 			for(Parameter p : form) {
+				if(p.getName().equals("idconta")) idconta = Integer.parseInt(p.getValue());
 				if(p.getName().equals("cpf")) cpf = p.getValue();
 				if(p.getName().equals("cnpj")) cnpj = p.getValue();
 				if(p.getName().equals("nome")) nome = p.getValue();
@@ -39,30 +41,33 @@ public class ContaDeleteServerResource extends ServerResource {
 			PreparedStatement ps;
 			if(cpf.equals("")) {
 				ps = c.prepareStatement("DELETE FROM CONTA "
-						+ "WHERE cpf IS NULL AND cnpj = ? AND DataCriacao = ? "
+						+ "WHERE idConta = ? AND cpf IS NULL AND cnpj = ? AND DataCriacao = ? "
 						+ "AND nome = ? AND tipoConta = ?;");
-				ps.setString(1, cnpj);
-				ps.setDate(2, data);
-				ps.setString(3, nome);
-				ps.setString(4, tipoConta);
+				ps.setInt(1, idconta);
+				ps.setString(2, cnpj);
+				ps.setDate(3, data);
+				ps.setString(4, nome);
+				ps.setString(5, tipoConta);
 			} else if (cnpj.equals("")) {
 				ps = c.prepareStatement("DELETE FROM CONTA "
-						+ "WHERE cnpj IS NULL and cpf = ? AND DataCriacao = ? "
+						+ "WHERE idConta = ? AND cnpj IS NULL and cpf = ? AND DataCriacao = ? "
 						+ "AND nome = ? AND tipoConta = ?;");
-				ps.setString(1, cpf);
-				ps.setDate(2, data);
-				ps.setString(3, nome);
-				ps.setString(4, tipoConta);
+				ps.setInt(1, idconta);
+				ps.setString(2, cpf);
+				ps.setDate(3, data);
+				ps.setString(4, nome);
+				ps.setString(5, tipoConta);
 			} else {
 			ps =
-					c.prepareStatement("DELETE FROM CONTA"
-							+ "WHERE cpf = ? AND cnpj = ? AND DataCriacao = ?"
-							+ "AND nome = ? AND tipoConta = ?;");
-			ps.setString(1, cpf);
-			ps.setString(2, cnpj);
-			ps.setDate(3, data);
-			ps.setString(4, nome);
-			ps.setString(5, tipoConta);
+					c.prepareStatement("DELETE FROM CONTA "
+							+ "WHERE idConta = ? AND cpf = ? AND cnpj = ? AND DataCriacao = ?"
+							+ " AND nome = ? AND tipoConta = ?;");
+			ps.setInt(1, idconta);
+			ps.setString(2, cpf);
+			ps.setString(3, cnpj);
+			ps.setDate(4, data);
+			ps.setString(5, nome);
+			ps.setString(6, tipoConta);
 			}
 			int rowsAffected = ps.executeUpdate();
 			Response res = getResponse();
